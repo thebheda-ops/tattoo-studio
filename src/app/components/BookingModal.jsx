@@ -48,14 +48,10 @@ const SERVICE_TYPES = [
  * Available artists with their specialties
  */
 const ARTISTS = [
-  { id: "marcus", name: "Marcus Chen", specialty: "Realism & Portraits" },
-  {
-    id: "sarah",
-    name: "Sarah Williams",
-    specialty: "Traditional & Neo-Traditional",
-  },
-  { id: "jake", name: "Jake Morrison", specialty: "Japanese & Blackwork" },
-  { id: "elena", name: "Elena Rodriguez", specialty: "Watercolor & Abstract" },
+  { id: "shyam", name: "Shyam", specialty: "Realism & Portraits" },
+  { id: "hari", name: "Hari", specialty: "Traditional & Neo-Traditional" },
+  { id: "ram", name: "Ram", specialty: "Japanese & Blackwork" },
+  { id: "raj", name: "Raj", specialty: "Watercolor & Abstract" },
   {
     id: "no-preference",
     name: "No Preference",
@@ -442,7 +438,7 @@ export default function BookingModal({
                     value={bookingData.client.name}
                     onChange={(e) => updateClientInfo("name", e.target.value)}
                     className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
-                    placeholder='John Doe'
+                    placeholder='Ram'
                     autoComplete='name'
                   />
                 </div>
@@ -464,7 +460,7 @@ export default function BookingModal({
                         updateClientInfo("phone", e.target.value)
                       }
                       className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
-                      placeholder='+1 (555) 000-0000'
+                      placeholder='+977 9705086562'
                       autoComplete='tel'
                     />
                   </div>
@@ -484,7 +480,7 @@ export default function BookingModal({
                         updateClientInfo("email", e.target.value)
                       }
                       className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
-                      placeholder='john@email.com'
+                      placeholder='ram@email.com'
                       autoComplete='email'
                     />
                   </div>
