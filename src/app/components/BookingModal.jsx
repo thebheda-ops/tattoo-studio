@@ -178,7 +178,7 @@ const validateTattooDetails = (tattoo) => {
 export default function BookingModal({
   isOpen,
   onClose,
-  whatsappNumber = "9843808299",
+  whatsappNumber = "9705086562",
 }) {
   // Initialize all hooks unconditionally - must be called in same order every render
   const [bookingData, setBookingData] = useState(createEmptyBooking());
