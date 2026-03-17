@@ -5,7 +5,7 @@ import BookingModal from "./BookingModal";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  // const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   const navLinks = [
     { href: "#home", label: "Home" },
@@ -34,12 +34,12 @@ export default function Navigation() {
                 {link.label}
               </a>
             ))}
-            <button
+            {/* <button
               onClick={() => setIsBookingOpen(true)}
               className='bg-[#ff3333] hover:bg-[#cc0000] px-6 py-2 text-sm uppercase tracking-widest font-semibold transition-colors'
             >
               Book Now
-            </button>
+            </button> */}
           </div>
 
           {/* Mobile menu button */}
@@ -86,7 +86,7 @@ export default function Navigation() {
                 {link.label}
               </a>
             ))}
-            <button
+            {/* <button
               onClick={() => {
                 setIsOpen(false);
                 setIsBookingOpen(true);
@@ -94,15 +94,15 @@ export default function Navigation() {
               className='block w-full mt-2 bg-[#ff3333] hover:bg-[#cc0000] px-6 py-2 text-sm uppercase tracking-widest font-semibold text-center transition-colors'
             >
               Book Now
-            </button>
+            </button> */}
           </div>
         )}
       </div>
 
-      <BookingModal
+      {/* <BookingModal
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
-      />
+      /> */}
     </nav>
   );
 }
