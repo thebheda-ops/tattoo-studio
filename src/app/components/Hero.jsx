@@ -12,7 +12,7 @@ export default function Hero() {
       className="relative min-h-screen flex items-center justify-center pt-16"
     >
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-zinc-900 to-black" />
+      <div className="absolute inset-0 bg-linear-to-br from-black via-zinc-900 to-black" />
       
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-20">
