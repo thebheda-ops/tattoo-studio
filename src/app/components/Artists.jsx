@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 const artists = [
@@ -5,8 +6,8 @@ const artists = [
     name: "Shyam",
     specialty: "Realism & Portraits",
     experience: "12 years",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    image: "",
+    // "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
   },
   {
     name: "Hari",
@@ -19,8 +20,8 @@ const artists = [
     name: "Ram",
     specialty: "Japanese & Blackwork",
     experience: "15 years",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+    image: "",
+    // "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
   },
   {
     name: "Raj",
