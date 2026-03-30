@@ -47,7 +47,7 @@ const ServicesSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (<ScrollReveal key={service.title} delay={index * 100}>
-              <div className="glass-card p-8 hover-lift hover-glow group cursor-default h-full">
+              <div className="glass-card p-6 sm:p-8 hover-lift hover-glow group cursor-default h-full">
                 <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                   <service.icon size={28} className="text-primary"/>
                 </div>

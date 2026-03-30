@@ -90,7 +90,7 @@ const ArtistModal = ({ artist, onClose }) => {
             </button>
           </div>
 
-          <div className="px-8 pb-8 -mt-20">
+          <div className="px-4 sm:px-8 pb-8 -mt-20">
             <div className="flex flex-col sm:flex-row items-start gap-6 mb-6">
               <div className="relative w-32 h-40 rounded-lg overflow-hidden border-4 border-background shadow-xl flex-shrink-0">
                 <Image

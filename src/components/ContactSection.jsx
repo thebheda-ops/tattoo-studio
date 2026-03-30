@@ -257,7 +257,7 @@ Sent from jadeinktattoo.com`;
 
           <ScrollReveal delay={200}>
             <div className="space-y-6">
-              <div className="glass-card p-8 space-y-6">
+              <div className="glass-card p-4 sm:p-8 space-y-6">
                 <h3 className="font-display text-2xl text-foreground tracking-wide">Visit Our Studio</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">

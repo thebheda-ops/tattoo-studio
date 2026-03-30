@@ -53,15 +53,15 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.6 }}
-          className="flex flex-wrap justify-center gap-4 mb-6"
+          className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6 px-2"
         >
           {certifications.map((cert, index) => (
             <div 
               key={cert.label}
-              className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full"
+              className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-primary/10 border border-primary/20 rounded-full"
             >
-              <cert.icon size={14} className="text-primary" />
-              <span className="text-xs uppercase tracking-wider text-primary font-body">{cert.label}</span>
+              <cert.icon size={12} className="text-primary sm:size-14" />
+              <span className="text-[10px] sm:text-xs uppercase tracking-wider text-primary font-body whitespace-nowrap">{cert.label}</span>
             </div>
           ))}
         </motion.div>

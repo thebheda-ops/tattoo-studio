@@ -49,7 +49,7 @@ const WhatsAppBooking = () => {
 
           {/* Right: CTA Card */}
           <ScrollReveal delay={150}>
-            <div className="glass-card p-8 lg:p-10 text-center">
+            <div className="glass-card p-6 sm:p-8 lg:p-10 text-center">
               <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
                 <MessageCircle size={40} className="text-green-500" />
               </div>

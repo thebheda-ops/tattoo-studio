@@ -68,7 +68,7 @@ const FAQSection = () => {
               <div className="glass-card overflow-hidden">
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full p-6 flex items-center justify-between text-left group"
+                  className="w-full p-4 sm:p-6 flex items-center justify-between text-left group"
                   aria-expanded={openIndex === index}
                 >
                   <div className="flex items-center gap-4">
@@ -96,7 +96,7 @@ const FAQSection = () => {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="px-6 pb-6 pl-20">
+                      <div className="px-4 sm:px-6 pb-4 sm:pb-6 pl-16 sm:pl-20">
                         <p className="text-muted-foreground font-body leading-relaxed">
                           {faq.answer}
                         </p>
