@@ -6,8 +6,8 @@ const navItems = [
   { label: "Services", href: "#services" },
   { label: "Artists", href: "#artists" },
   { label: "Gallery", href: "#gallery" },
-  { label: "Testimonials", href: "#testimonials" },
   { label: "Aftercare", href: "#aftercare" },
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
 const Navbar = () => {

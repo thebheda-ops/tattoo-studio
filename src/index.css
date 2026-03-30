@@ -149,6 +149,18 @@ html {
   }
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+/* Custom cursor - hide default on desktop */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, [role='button'], input, textarea, select {
+    cursor: none;
+  }
+}
+
+/* Selection styling */
+::selection {
+  background: hsl(0 85% 55% / 0.3);
+  color: hsl(0 0% 95%);
 }

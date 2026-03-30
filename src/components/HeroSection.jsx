@@ -1,30 +1,72 @@
-import { motion } from "framer-motion";
-import { Shield, Sparkles, Award } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Shield, Sparkles, Award, Medal, CheckCircle } from "lucide-react";
 import Image from "next/image";
+import { useRef } from "react";
 import heroBg from "@/assets/hero-bg.jpg";
+
 const badges = [
-    { icon: Award, label: "Licensed Artists" },
-    { icon: Shield, label: "Sterile Environment" },
-    { icon: Sparkles, label: "Custom Designs" },
+  { icon: Award, label: "Licensed Artists" },
+  { icon: Shield, label: "Sterile Environment" },
+  { icon: Sparkles, label: "Custom Designs" },
 ];
+
+const certifications = [
+  { icon: Medal, label: "Health Department Licensed" },
+  { icon: CheckCircle, label: "Bloodborne Pathogen Certified" },
+  { icon: Award, label: "Award-Winning Studio 2019" },
+];
+
 const HeroSection = () => {
-    return (<section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden" aria-label="Hero">
-      {/* Background image */}
-      <div className="absolute inset-0">
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  return (
+    <section 
+      id="home" 
+      ref={ref}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden" 
+      aria-label="Hero"
+    >
+      {/* Background image with parallax */}
+      <motion.div className="absolute inset-0" style={{ y }}>
         <Image
           src={heroBg}
           alt="Jade Ink tattoo studio interior with professional equipment"
           fill
           priority
-          className="object-cover"
+          className="object-cover scale-110"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background"/>
         <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50"/>
-      </div>
+      </motion.div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-sm sm:text-base uppercase tracking-[0.3em] text-muted-foreground mb-4">
+      <motion.div style={{ opacity }} className="relative z-10 max-w-5xl mx-auto px-4 text-center">
+        {/* Certificate badges */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.6 }}
+          className="flex flex-wrap justify-center gap-4 mb-6"
+        >
+          {certifications.map((cert, index) => (
+            <div 
+              key={cert.label}
+              className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full"
+            >
+              <cert.icon size={14} className="text-primary" />
+              <span className="text-xs uppercase tracking-wider text-primary font-body">{cert.label}</span>
+            </div>
+          ))}
+        </motion.div>
+
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="text-sm sm:text-base uppercase tracking-[0.3em] text-muted-foreground mb-4">
           Award-Winning Tattoo Studio · Kathmandu
         </motion.p>
 
@@ -56,7 +98,7 @@ const HeroSection = () => {
               <span className="text-sm tracking-wide">{badge.label}</span>
             </div>))}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="absolute bottom-8 left-1/2 -translate-x-1/2">
@@ -64,6 +106,8 @@ const HeroSection = () => {
           <motion.div animate={{ y: [0, 12, 0] }} transition={{ duration: 1.5, repeat: Infinity }} className="w-1.5 h-1.5 bg-primary rounded-full mt-2"/>
         </div>
       </motion.div>
-    </section>);
+    </section>
+  );
 };
+
 export default HeroSection;

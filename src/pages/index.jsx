@@ -6,6 +6,7 @@ import GallerySection from "@/components/GallerySection";
 import WhatsAppBooking from "@/components/WhatsAppBooking";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import AfterCareSection from "@/components/AfterCareSection";
+import FAQSection from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -20,6 +21,7 @@ const Index = () => {
       <WhatsAppBooking />
       <TestimonialsSection />
       <AfterCareSection />
+      <FAQSection />
       <ContactSection />
       <Footer />
     </div>

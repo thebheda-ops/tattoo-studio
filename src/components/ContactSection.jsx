@@ -1,20 +1,87 @@
 import { useState } from "react";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, MessageCircle, Upload } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import { toast } from "sonner";
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", service: "", message: "" });
+  const [formData, setFormData] = useState({ 
+    name: "", 
+    email: "", 
+    phone: "", 
+    service: "", 
+    size: "",
+    style: "",
+    budget: "",
+    message: "" 
+  });
   const [sending, setSending] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email";
+    }
+    if (!formData.message.trim()) newErrors.message = "Please tell us about your tattoo idea";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+    
     setSending(true);
+    
+    // Format message for WhatsApp
+    const phoneNumber = "9779705086562";
+    const message = `*New Booking Request - Jade Ink Tattoo Studio*
+
+*Name:* ${formData.name}
+*Email:* ${formData.email}
+*Phone:* ${formData.phone || "Not provided"}
+*Service:* ${formData.service || "Not specified"}
+*Size:* ${formData.size || "Not specified"}
+*Style:* ${formData.style || "Not specified"}
+*Budget:* ${formData.budget || "Not specified"}
+
+*Details:*
+${formData.message}
+
+📎 *Reference Images:* Please send any reference images separately via WhatsApp
+
+---
+Sent from jadeinktattoo.com`;
+
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Show toast and open WhatsApp
+    toast.success("Opening WhatsApp with your booking details...");
+    
+    // Small delay to show toast before redirecting
     setTimeout(() => {
-      toast.success("Message sent! We'll get back to you within 24 hours.");
-      setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+      window.open(whatsappUrl, "_blank");
+      setFormData({ 
+        name: "", 
+        email: "", 
+        phone: "", 
+        service: "", 
+        size: "",
+        style: "",
+        budget: "",
+        message: "" 
+      });
+      setErrors({});
       setSending(false);
-    }, 1000);
+    }, 500);
+  };
+
+  const handleChange = (field) => (e) => {
+    setFormData({ ...formData, [field]: e.target.value });
+    if (errors[field]) setErrors({ ...errors, [field]: null });
   };
 
   return (
@@ -36,21 +103,49 @@ const ContactSection = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm text-muted-foreground mb-1.5 font-body">Name *</label>
-                  <input id="name" type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body" placeholder="Your name"/>
+                  <input 
+                    id="name" 
+                    type="text" 
+                    value={formData.name} 
+                    onChange={handleChange("name")} 
+                    className={`w-full px-4 py-3 bg-secondary border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body ${errors.name ? "border-destructive" : "border-border"}`}
+                    placeholder="Your name"
+                  />
+                  {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm text-muted-foreground mb-1.5 font-body">Email *</label>
-                  <input id="email" type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body" placeholder="your@email.com"/>
+                  <input 
+                    id="email" 
+                    type="email" 
+                    value={formData.email} 
+                    onChange={handleChange("email")} 
+                    className={`w-full px-4 py-3 bg-secondary border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body ${errors.email ? "border-destructive" : "border-border"}`}
+                    placeholder="your@email.com"
+                  />
+                  {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="phone" className="block text-sm text-muted-foreground mb-1.5 font-body">Phone</label>
-                  <input id="phone" type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body" placeholder="+977 XXX XXXXXXX"/>
+                  <input 
+                    id="phone" 
+                    type="tel" 
+                    value={formData.phone} 
+                    onChange={handleChange("phone")} 
+                    className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body" 
+                    placeholder="+977 XXX XXXXXXX"
+                  />
                 </div>
                 <div>
                   <label htmlFor="service" className="block text-sm text-muted-foreground mb-1.5 font-body">Service</label>
-                  <select id="service" value={formData.service} onChange={(e) => setFormData({ ...formData, service: e.target.value })} className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body">
+                  <select 
+                    id="service" 
+                    value={formData.service} 
+                    onChange={handleChange("service")} 
+                    className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body"
+                  >
                     <option value="">Select a service</option>
                     <option>Custom Design</option>
                     <option>Realism</option>
@@ -61,13 +156,101 @@ const ContactSection = () => {
                   </select>
                 </div>
               </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="size" className="block text-sm text-muted-foreground mb-1.5 font-body">Tattoo Size</label>
+                  <select 
+                    id="size" 
+                    value={formData.size} 
+                    onChange={handleChange("size")} 
+                    className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body"
+                  >
+                    <option value="">Select size</option>
+                    <option>Small (up to 5cm)</option>
+                    <option>Medium (5-15cm)</option>
+                    <option>Large (15-25cm)</option>
+                    <option>XL (Full sleeve, back piece)</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="style" className="block text-sm text-muted-foreground mb-1.5 font-body">Tattoo Style</label>
+                  <select 
+                    id="style" 
+                    value={formData.style} 
+                    onChange={handleChange("style")} 
+                    className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body"
+                  >
+                    <option value="">Select style</option>
+                    <option>Realism</option>
+                    <option>Traditional</option>
+                    <option>Neo-Traditional</option>
+                    <option>Japanese</option>
+                    <option>Watercolor</option>
+                    <option>Blackwork</option>
+                    <option>Geometric</option>
+                    <option>Custom Design</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="budget" className="block text-sm text-muted-foreground mb-1.5 font-body">Budget Range</label>
+                  <select 
+                    id="budget" 
+                    value={formData.budget} 
+                    onChange={handleChange("budget")} 
+                    className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body"
+                  >
+                    <option value="">Select budget</option>
+                    <option>NPR 5,000 - 15,000</option>
+                    <option>NPR 15,000 - 30,000</option>
+                    <option>NPR 30,000 - 50,000</option>
+                    <option>NPR 50,000 - 100,000</option>
+                    <option>100,000+ (Custom quote)</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="reference" className="block text-sm text-muted-foreground mb-1.5 font-body">Reference Images</label>
+                  <div className="relative">
+                    <input 
+                      id="reference" 
+                      type="file" 
+                      accept="image/*"
+                      multiple
+                      className="hidden"
+                      onChange={(e) => {
+                        const files = e.target.files;
+                        if (files && files.length > 0) {
+                          toast.info(`${files.length} file(s) selected. Please attach them manually in WhatsApp.`);
+                        }
+                      }}
+                    />
+                    <label 
+                      htmlFor="reference" 
+                      className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-secondary border border-dashed border-border rounded text-foreground text-sm hover:bg-secondary/80 hover:border-primary/50 transition-all cursor-pointer"
+                    >
+                      <Upload size={18} />
+                      Upload images (optional)
+                    </label>
+                  </div>
+                  <p className="text-muted-foreground text-xs mt-1">Max 5 images. You'll attach them in WhatsApp.</p>
+                </div>
+              </div>
               <div>
                 <label htmlFor="message" className="block text-sm text-muted-foreground mb-1.5 font-body">Message *</label>
-                <textarea id="message" required rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full px-4 py-3 bg-secondary border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body resize-none" placeholder="Tell us about your tattoo idea..."/>
+                <textarea 
+                  id="message" 
+                  rows={4} 
+                  value={formData.message} 
+                  onChange={handleChange("message")} 
+                  className={`w-full px-4 py-3 bg-secondary border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 font-body resize-none ${errors.message ? "border-destructive" : "border-border"}`}
+                  placeholder="Tell us about your tattoo idea... (size, placement, style, reference images)"
+                />
+                {errors.message && <p className="text-destructive text-xs mt-1">{errors.message}</p>}
               </div>
-              <button type="submit" disabled={sending} className="w-full py-3.5 bg-primary text-primary-foreground font-semibold text-sm rounded tracking-wider uppercase hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50">
-                <Send size={16}/>
-                {sending ? "Sending..." : "Send Message"}
+              <button type="submit" disabled={sending} className="w-full py-3.5 bg-green-600 text-white font-semibold text-sm rounded tracking-wider uppercase hover:bg-green-700 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50">
+                <MessageCircle size={18}/>
+                {sending ? "Opening WhatsApp..." : "Send via WhatsApp"}
               </button>
             </form>
           </ScrollReveal>
