@@ -79,7 +79,7 @@ const AfterCareSection = () => {
 
           {/* Don'ts List */}
           <ScrollReveal delay={200}>
-            <div className="glass-card p-8 h-full">
+            <div className="glass-card p-6 sm:p-8 h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-lg bg-destructive/10 flex items-center justify-center">
                   <AlertCircle size={24} className="text-destructive" />

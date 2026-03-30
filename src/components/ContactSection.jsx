@@ -99,7 +99,7 @@ Sent from jadeinktattoo.com`;
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <ScrollReveal delay={100}>
-            <form onSubmit={handleSubmit} className="glass-card p-8 space-y-5">
+            <form onSubmit={handleSubmit} className="glass-card p-4 sm:p-8 space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm text-muted-foreground mb-1.5 font-body">Name *</label>

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://jadeinktattoo.com/sitemap.xml
+
+# Disallow patterns (if any in future)
+# Disallow: /admin/
+# Disallow: /private/
