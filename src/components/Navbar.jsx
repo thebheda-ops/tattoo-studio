@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "Services", href: "#services" },
-    { label: "Artists", href: "#artists" },
-    { label: "Gallery", href: "#gallery" },
-    { label: "Testimonials", href: "#testimonials" },
-    { label: "Contact", href: "#contact" },
+  { label: "Home", href: "#home" },
+  { label: "Services", href: "#services" },
+  { label: "Artists", href: "#artists" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Testimonials", href: "#testimonials" },
+  { label: "Aftercare", href: "#aftercare" },
+  { label: "Contact", href: "#contact" },
 ];
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);

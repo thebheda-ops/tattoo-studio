@@ -138,3 +138,17 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(0 85% 55%);
 }
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(0 85% 55% / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px hsl(0 85% 55% / 0.2);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}

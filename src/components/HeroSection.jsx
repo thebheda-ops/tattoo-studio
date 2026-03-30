@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Shield, Sparkles, Award } from "lucide-react";
+import Image from "next/image";
 import heroBg from "@/assets/hero-bg.jpg";
 const badges = [
     { icon: Award, label: "Licensed Artists" },
@@ -10,7 +11,14 @@ const HeroSection = () => {
     return (<section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden" aria-label="Hero">
       {/* Background image */}
       <div className="absolute inset-0">
-        <img src={heroBg} alt="Jade Ink tattoo studio interior with professional equipment" width={1920} height={1080} className="w-full h-full object-cover"/>
+        <Image
+          src={heroBg}
+          alt="Jade Ink tattoo studio interior with professional equipment"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background"/>
         <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50"/>
       </div>

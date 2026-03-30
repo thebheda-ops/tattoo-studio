@@ -1,22 +1,24 @@
 import { useState } from "react";
-import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import { toast } from "sonner";
+
 const ContactSection = () => {
-    const [formData, setFormData] = useState({ name: "", email: "", phone: "", service: "", message: "" });
-    const [sending, setSending] = useState(false);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSending(true);
-        // Simulate send
-        setTimeout(() => {
-            toast.success("Message sent! We'll get back to you within 24 hours.");
-            setFormData({ name: "", email: "", phone: "", service: "", message: "" });
-            setSending(false);
-        }, 1000);
-    };
-    const whatsappUrl = `https://wa.me/9779705086562?text=${encodeURIComponent("Hi! I'd like to book a tattoo session at Jade Ink.")}`;
-    return (<section id="contact" className="section-padding" aria-label="Contact us">
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", service: "", message: "" });
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSending(true);
+    setTimeout(() => {
+      toast.success("Message sent! We'll get back to you within 24 hours.");
+      setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+      setSending(false);
+    }, 1000);
+  };
+
+  return (
+    <section id="contact" className="section-padding" aria-label="Contact us">
       <div className="max-w-7xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-16">
@@ -29,7 +31,6 @@ const ContactSection = () => {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Contact Form */}
           <ScrollReveal delay={100}>
             <form onSubmit={handleSubmit} className="glass-card p-8 space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -71,21 +72,8 @@ const ContactSection = () => {
             </form>
           </ScrollReveal>
 
-          {/* Info + Map */}
           <ScrollReveal delay={200}>
             <div className="space-y-6">
-              {/* WhatsApp CTA */}
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="glass-card p-6 flex items-center gap-4 hover-lift group block">
-                <div className="w-14 h-14 rounded-full bg-green-600/20 flex items-center justify-center group-hover:bg-green-600/30 transition-colors flex-shrink-0">
-                  <MessageCircle size={24} className="text-green-500"/>
-                </div>
-                <div>
-                  <p className="font-display text-xl text-foreground tracking-wide">Book via WhatsApp</p>
-                  <p className="text-muted-foreground text-sm font-body">Quick response, usually within 30 minutes</p>
-                </div>
-              </a>
-
-              {/* Info cards */}
               <div className="glass-card p-8 space-y-6">
                 <h3 className="font-display text-2xl text-foreground tracking-wide">Visit Our Studio</h3>
                 <div className="space-y-4">
@@ -118,14 +106,15 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              {/* Google Map */}
               <div className="glass-card overflow-hidden rounded-lg">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56516.31397712412!2d85.28495805!3d27.7172453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb198a307baabf%3A0xb5137c1bf18db1ea!2sKathmandu%2044600!5e0!3m2!1sen!2snp!4v1700000000000!5m2!1sen!2snp" width="100%" height="220" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Jade Ink studio location in Kathmandu, Nepal" className="grayscale hover:grayscale-0 transition-all duration-500"/>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56516.31397712412!2d85.28495805!3d27.7172453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb198a307baabf%3A0xb5137c1bf18db1ea!2sKathmandu%2044600!5e0!3m2!1sen!2snp!4v1700000000000!5m2!1sen!2np" width="100%" height="220" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Jade Ink studio location in Kathmandu, Nepal" className="grayscale hover:grayscale-0 transition-all duration-500"/>
               </div>
             </div>
           </ScrollReveal>
         </div>
       </div>
-    </section>);
+    </section>
+  );
 };
+
 export default ContactSection;
