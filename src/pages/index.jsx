@@ -96,6 +96,7 @@ const Index = () => {
   return (
     <>
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <title>Jade Ink Tattoo Studio | Award-Winning Tattoos in Kathmandu, Nepal</title>
         <meta name="description" content="Premier tattoo studio in Kathmandu, Nepal. Specializing in custom designs, realism, traditional, neo-traditional, and Japanese tattoos. Professional artists, sterile environment." />
         <script

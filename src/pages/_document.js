@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Viewport is handled by Next.js metadata in index.jsx */}
         
         {/* Primary SEO */}
         <meta name="title" content="Jade Ink Tattoo Studio | Award-Winning Tattoos in Kathmandu, Nepal" />
