@@ -8,8 +8,8 @@ export default function Home() {
           className='dark:invert'
           src='/icon-red.svg'
           alt='BTM logo'
-          width={100}
-          height={20}
+          width={400}
+          height={80}
           priority
         />
         <div className='flex flex-col items-center gap-6 text-center sm:items-start sm:text-left'>
