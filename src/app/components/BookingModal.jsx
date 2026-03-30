@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // ============================================
 // BOOKING MODEL - Data Structures & Constants
@@ -385,11 +386,21 @@ export default function BookingModal({
           <div className='sticky top-0 bg-zinc-950 border-b border-zinc-800 p-4 sm:p-6 flex items-center justify-between z-10'>
             <div>
               <h2 className='text-xl sm:text-2xl font-bold uppercase tracking-wider'>
-                Book <span className='text-[#ff3333]'>Appointment</span>
+                Book <span className='text-[#D32F2F]'>Appointment</span>
               </h2>
-              <p className='text-zinc-500 text-sm mt-1'>
-                Step {currentStep} of 3
-              </p>
+              <div className='w-full mt-2'>
+                <div className='flex gap-2 w-32'>
+                  {[1, 2, 3].map((step) => (
+                    <div 
+                      key={step} 
+                      className={`h-1 flex-1 rounded-full transition-colors duration-300 ${currentStep >= step ? 'bg-[#D32F2F]' : 'bg-zinc-800'}`} 
+                    />
+                  ))}
+                </div>
+                <p className='text-zinc-500 text-xs mt-1 uppercase tracking-widest'>
+                  Step {currentStep} of 3
+                </p>
+              </div>
             </div>
             <button
               onClick={onClose}
@@ -414,94 +425,109 @@ export default function BookingModal({
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className='p-4 sm:p-6 pb-8'>
+          <form onSubmit={handleSubmit} className='p-4 sm:p-6 pb-8 overflow-hidden relative'>
             {renderErrors()}
 
-            {/* Step 1: Client Information */}
-            {currentStep === FORM_STEPS.CLIENT_INFO && (
-              <div className='space-y-6'>
-                <h3 className='text-lg font-semibold uppercase tracking-wider text-zinc-300'>
-                  Your Information
-                </h3>
+            <AnimatePresence mode="wait">
+              {/* Step 1: Client Information */}
+              {currentStep === FORM_STEPS.CLIENT_INFO && (
+                <motion.div 
+                  key="step1"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                  className='space-y-6'
+                >
+                  <h3 className='text-lg font-semibold uppercase tracking-wider text-zinc-300'>
+                    Your Information
+                  </h3>
 
-                <div>
-                  <label
-                    htmlFor='client-name'
-                    className='block text-sm uppercase tracking-widest mb-2 text-zinc-400'
-                  >
-                    Full Name *
-                  </label>
-                  <input
-                    id='client-name'
-                    type='text'
-                    required
-                    value={bookingData.client.name}
-                    onChange={(e) => updateClientInfo("name", e.target.value)}
-                    className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
-                    placeholder='Ram'
-                    autoComplete='name'
-                  />
-                </div>
-
-                <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6'>
                   <div>
                     <label
-                      htmlFor='client-phone'
+                      htmlFor='client-name'
                       className='block text-sm uppercase tracking-widest mb-2 text-zinc-400'
                     >
-                      Phone Number *
+                      Full Name *
                     </label>
                     <input
-                      id='client-phone'
-                      type='tel'
+                      id='client-name'
+                      type='text'
                       required
-                      value={bookingData.client.phone}
-                      onChange={(e) =>
-                        updateClientInfo("phone", e.target.value)
-                      }
-                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
-                      placeholder='+977 9705086562'
-                      autoComplete='tel'
+                      value={bookingData.client.name}
+                      onChange={(e) => updateClientInfo("name", e.target.value)}
+                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors rounded'
+                      placeholder='Ram'
+                      autoComplete='name'
                     />
                   </div>
-                  <div>
-                    <label
-                      htmlFor='client-email'
-                      className='block text-sm uppercase tracking-widest mb-2 text-zinc-400'
+
+                  <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6'>
+                    <div>
+                      <label
+                        htmlFor='client-phone'
+                        className='block text-sm uppercase tracking-widest mb-2 text-zinc-400'
+                      >
+                        Phone Number *
+                      </label>
+                      <input
+                        id='client-phone'
+                        type='tel'
+                        required
+                        value={bookingData.client.phone}
+                        onChange={(e) =>
+                          updateClientInfo("phone", e.target.value)
+                        }
+                        className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors rounded'
+                        placeholder='+977 9705086562'
+                        autoComplete='tel'
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor='client-email'
+                        className='block text-sm uppercase tracking-widest mb-2 text-zinc-400'
+                      >
+                        Email *
+                      </label>
+                      <input
+                        id='client-email'
+                        type='email'
+                        required
+                        value={bookingData.client.email}
+                        onChange={(e) =>
+                          updateClientInfo("email", e.target.value)
+                        }
+                        className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors rounded'
+                        placeholder='ram@email.com'
+                        autoComplete='email'
+                      />
+                    </div>
+                  </div>
+
+                  <div className='pt-4'>
+                    <button
+                      type='button'
+                      onClick={goToNextStep}
+                      disabled={!canProceed()}
+                      className='w-full bg-[#D32F2F] hover:bg-[#911414] disabled:bg-zinc-700 disabled:cursor-not-allowed py-4 text-lg uppercase tracking-widest font-semibold transition-colors rounded shadow-lg'
                     >
-                      Email *
-                    </label>
-                    <input
-                      id='client-email'
-                      type='email'
-                      required
-                      value={bookingData.client.email}
-                      onChange={(e) =>
-                        updateClientInfo("email", e.target.value)
-                      }
-                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
-                      placeholder='ram@email.com'
-                      autoComplete='email'
-                    />
+                      Continue
+                    </button>
                   </div>
-                </div>
+                </motion.div>
+              )}
 
-                <div className='pt-4'>
-                  <button
-                    type='button'
-                    onClick={goToNextStep}
-                    disabled={!canProceed()}
-                    className='w-full bg-[#ff3333] hover:bg-[#cc0000] disabled:bg-zinc-700 disabled:cursor-not-allowed py-4 text-lg uppercase tracking-widest font-semibold transition-colors rounded'
-                  >
-                    Continue
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 2: Booking Details */}
-            {currentStep === FORM_STEPS.BOOKING_DETAILS && (
-              <div className='space-y-6'>
+              {/* Step 2: Booking Details */}
+              {currentStep === FORM_STEPS.BOOKING_DETAILS && (
+                <motion.div 
+                  key="step2"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                  className='space-y-6'
+                >
                 <h3 className='text-lg font-semibold uppercase tracking-wider text-zinc-300'>
                   Service & Artist
                 </h3>
@@ -520,7 +546,7 @@ export default function BookingModal({
                     onChange={(e) =>
                       updateBookingDetails("service", e.target.value)
                     }
-                    className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
+                    className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors rounded'
                   >
                     <option value=''>Select a service</option>
                     {SERVICE_TYPES.map((service) => (
@@ -544,7 +570,7 @@ export default function BookingModal({
                     onChange={(e) =>
                       updateBookingDetails("artist", e.target.value)
                     }
-                    className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
+                    className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors rounded'
                   >
                     <option value=''>Select an artist (optional)</option>
                     {ARTISTS.map((artist) => (
@@ -572,7 +598,7 @@ export default function BookingModal({
                       onChange={(e) =>
                         updateBookingDetails("date", e.target.value)
                       }
-                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
+                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors rounded'
                     />
                   </div>
                   <div>
@@ -589,7 +615,7 @@ export default function BookingModal({
                       onChange={(e) =>
                         updateBookingDetails("time", e.target.value)
                       }
-                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
+                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors rounded'
                     >
                       <option value=''>Select time</option>
                       {TIME_SLOTS.map((time) => (
@@ -613,17 +639,24 @@ export default function BookingModal({
                     type='button'
                     onClick={goToNextStep}
                     disabled={!canProceed()}
-                    className='flex-1 bg-[#ff3333] hover:bg-[#cc0000] disabled:bg-zinc-700 disabled:cursor-not-allowed py-4 text-lg uppercase tracking-widest font-semibold transition-colors rounded'
+                    className='flex-1 bg-[#D32F2F] hover:bg-[#911414] disabled:bg-zinc-700 disabled:cursor-not-allowed py-4 text-lg uppercase tracking-widest font-semibold transition-colors rounded shadow-lg'
                   >
                     Continue
                   </button>
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Step 3: Tattoo Details */}
             {currentStep === FORM_STEPS.TATTOO_DETAILS && (
-              <div className='space-y-6'>
+              <motion.div 
+                key="step3"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.3 }}
+                className='space-y-6'
+              >
                 <h3 className='text-lg font-semibold uppercase tracking-wider text-zinc-300'>
                   Tattoo Details
                 </h3>
@@ -643,7 +676,7 @@ export default function BookingModal({
                       onChange={(e) =>
                         updateTattooDetails("size", e.target.value)
                       }
-                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
+                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors rounded'
                     >
                       <option value=''>Select size</option>
                       {TATTOO_SIZES.map((size) => (
@@ -667,7 +700,7 @@ export default function BookingModal({
                       onChange={(e) =>
                         updateTattooDetails("placement", e.target.value)
                       }
-                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors rounded'
+                      className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors rounded'
                     >
                       <option value=''>Select placement</option>
                       {BODY_PLACEMENTS.map((placement) => (
@@ -694,7 +727,7 @@ export default function BookingModal({
                     onChange={(e) =>
                       updateTattooDetails("description", e.target.value)
                     }
-                    className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#ff3333] focus:outline-none transition-colors resize-none rounded'
+                    className='w-full bg-black border border-zinc-700 px-4 py-3 text-white focus:border-[#D32F2F] focus:outline-none transition-colors resize-none rounded'
                     placeholder="Describe your tattoo idea in detail. Include any specific elements, colors, or styles you're looking for..."
                   />
                   <p className='text-zinc-500 text-xs mt-1'>
@@ -726,7 +759,7 @@ export default function BookingModal({
                       !bookingData.tattoo.placement ||
                       !bookingData.tattoo.description
                     }
-                    className='flex-1 bg-[#ff3333] hover:bg-[#cc0000] disabled:bg-zinc-700 disabled:cursor-not-allowed py-4 text-lg uppercase tracking-widest font-semibold transition-colors flex items-center justify-center gap-2 rounded'
+                    className='flex-1 bg-[#D32F2F] hover:bg-[#911414] disabled:bg-zinc-700 disabled:cursor-not-allowed py-4 text-lg uppercase tracking-widest font-semibold transition-colors flex items-center justify-center gap-2 rounded shadow-lg'
                   >
                     {isSubmitting ? (
                       <>
@@ -765,8 +798,9 @@ export default function BookingModal({
                     )}
                   </button>
                 </div>
-              </div>
+              </motion.div>
             )}
+            </AnimatePresence>
           </form>
         </div>
       </div>

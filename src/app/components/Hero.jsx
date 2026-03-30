@@ -1,30 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import Image from "next/image";
 import BookingModal from "./BookingModal";
+import studioBg from "@/assets/studio-photo.jpg";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Hero() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const ref = useRef(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  const containerVars = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.3 }
+    }
+  };
+
+  const letterVars = {
+    hidden: { opacity: 0, y: 50 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  };
 
   return (
     <section
+      ref={ref}
       id="home"
-      className="relative min-h-screen flex items-center justify-center pt-16"
+      className="relative min-h-screen flex items-center justify-center pt-16 bg-black overflow-hidden"
     >
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-linear-to-br from-black via-zinc-900 to-black" />
+      {/* Background Image */}
+      <motion.div style={{ y, opacity }} className="absolute inset-0 select-none pointer-events-none">
+        <Image 
+          src={studioBg} 
+          alt="Jade Ink Tattoo Studio" 
+          fill 
+          className="object-cover opacity-30 mix-blend-luminosity"
+          priority
+        />
+      </motion.div>
       
-      {/* Decorative elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#ff3333] rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-zinc-800 rounded-full blur-[150px]" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6">
-          <span className="block">WE CREATE</span>
-          <span className="block text-[#ff3333]">PERMANENT ART</span>
-        </h1>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24">
+        <motion.h1 
+          variants={containerVars}
+          initial="hidden"
+          animate="show"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 flex flex-col items-center"
+        >
+          <div className="overflow-hidden flex">
+            {"WE CREATE".split("").map((char, i) => (
+              <motion.span key={i} variants={letterVars} className={char === " " ? "w-4" : "block"}>{char}</motion.span>
+            ))}
+          </div>
+          <div className="overflow-hidden flex text-[#D32F2F]">
+            {"PERMANENT ART".split("").map((char, i) => (
+              <motion.span key={i} variants={letterVars} className={char === " " ? "w-4" : "block"}>{char}</motion.span>
+            ))}
+          </div>
+        </motion.h1>
         
         <p className="text-lg sm:text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-10 leading-relaxed">
           Award-winning tattoo studio specializing in custom designs, 
@@ -34,13 +75,13 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={() => setIsBookingOpen(true)}
-            className="bg-[#ff3333] hover:bg-[#cc0000] px-8 py-4 text-lg uppercase tracking-widest font-semibold transition-colors"
+            className="bg-[#D32F2F] hover:bg-[#911414] px-8 py-4 text-lg uppercase tracking-widest font-semibold transition-all duration-300 hover:-translate-y-1 shadow-[0_0_20px_rgba(211,47,47,0.3)] hover:shadow-[0_0_30px_rgba(211,47,47,0.5)]"
           >
             Book Consultation
           </button>
           <a
             href="#gallery"
-            className="border-2 border-white hover:bg-white hover:text-black px-8 py-4 text-lg uppercase tracking-widest font-semibold transition-colors"
+            className="border-2 border-white/20 hover:border-white bg-white/5 hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-lg uppercase tracking-widest font-semibold transition-all duration-300 hover:-translate-y-1"
           >
             View Portfolio
           </a>

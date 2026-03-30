@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import BookingModal from "./BookingModal";
 
 export default function Navigation() {
@@ -15,12 +16,22 @@ export default function Navigation() {
     { href: "#contact", label: "Contact" },
   ];
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className='fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10'>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-0' : 'bg-transparent border-b border-transparent py-4'}`}>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex items-center justify-between h-16'>
           <a href='#home' className='text-2xl font-bold tracking-wider'>
-            <span className='text-[#ff3333]'>JADE</span> INK
+            <span className='text-[#D32F2F]'>JADE</span> INK
           </a>
 
           {/* Desktop Navigation */}
@@ -29,7 +40,7 @@ export default function Navigation() {
               <a
                 key={link.href}
                 href={link.href}
-                className='text-sm uppercase tracking-widest hover:text-[#ff3333] transition-colors'
+                className='text-sm uppercase tracking-widest hover:text-[#D32F2F] transition-colors'
               >
                 {link.label}
               </a>
@@ -80,7 +91,7 @@ export default function Navigation() {
               <a
                 key={link.href}
                 href={link.href}
-                className='block py-2 text-sm uppercase tracking-widest hover:text-[#ff3333] transition-colors'
+                className='block py-2 text-sm uppercase tracking-widest hover:text-[#D32F2F] transition-colors'
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}

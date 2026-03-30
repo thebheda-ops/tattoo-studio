@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import BookingModal from "./BookingModal";
 
 export default function Contact() {

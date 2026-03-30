@@ -1,34 +1,39 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-const artists = [
+
+const artistsData = [
   {
     name: "Shyam",
-    specialty: "Realism & Portraits",
-    experience: "12 years",
-    image: "",
-    // "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    username: "shyam.ink",
+    bio: "12 years of experience specializing in Realism & Portraits.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    stats: { following: 142, followers: 8500, posts: 320 },
+    socialLinks: { linkedin: "#", github: "#", twitter: "#" },
   },
   {
     name: "Hari",
-    specialty: "Traditional & Neo-Traditional",
-    experience: "8 years",
-    image: "",
-    // "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+    username: "hari.tattoo",
+    bio: "8 years of experience in Traditional & Neo-Traditional.",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+    stats: { following: 231, followers: 5200, posts: 198 },
+    socialLinks: { linkedin: "#", twitter: "#" },
   },
   {
     name: "Ram",
-    specialty: "Japanese & Blackwork",
-    experience: "15 years",
-    image: "",
-    // "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+    username: "ram.irezumi",
+    bio: "15 years mastering Japanese & Blackwork styles.",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+    stats: { following: 89, followers: 12400, posts: 450 },
+    socialLinks: { twitter: "#" },
   },
   {
     name: "Raj",
-    specialty: "Watercolor & Abstract",
-    experience: "6 years",
-    image: "",
-    // "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+    username: "raj.colors",
+    bio: "6 years creating vivid Watercolor & Abstract designs.",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+    stats: { following: 445, followers: 3100, posts: 112 },
+    socialLinks: { linkedin: "#", github: "#" },
   },
 ];
 
@@ -47,26 +52,20 @@ export default function Artists() {
         </div>
 
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
-          {artists.map((artist, index) => (
-            <div key={index} className='group'>
-              <div className='relative overflow-hidden mb-4'>
-                <div className='aspect-square bg-zinc-800'>
-                  <img
-                    src={artist.image}
-                    alt={artist.name}
-                    className='w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500'
-                  />
-                </div>
-                <div className='absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent' />
+          {artistsData.map((artist, index) => (
+            <div key={index} className="group">
+              <div className="relative overflow-hidden mb-4 aspect-square bg-zinc-800">
+                <img
+                  src={artist.image}
+                  alt={artist.name}
+                  className="w-full h-full object-cover grayscale"
+                />
               </div>
-              <h3 className='text-xl font-bold uppercase tracking-wider mb-1'>
+              <h3 className="text-xl font-bold uppercase tracking-wider mb-1">
                 {artist.name}
               </h3>
-              <p className='text-[#ff3333] text-sm uppercase tracking-widest mb-2'>
-                {artist.specialty}
-              </p>
-              <p className='text-zinc-500 text-sm'>
-                {artist.experience} experience
+              <p className="text-[#ff3333] text-sm uppercase tracking-widest mb-2">
+                {artist.bio}
               </p>
             </div>
           ))}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const services = [
   {
@@ -37,11 +38,11 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 bg-zinc-950">
+    <section id="services" className="py-24 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            OUR <span className="text-[#ff3333]">SERVICES</span>
+            OUR <span className="text-[#D32F2F]">SERVICES</span>
           </h2>
           <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
             From custom designs to cover-ups, we offer a full range of professional tattoo services
@@ -50,13 +51,18 @@ export default function Services() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group p-8 border border-zinc-800 hover:border-[#ff3333] transition-colors bg-black/50"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+              whileHover={{ y: -8 }}
+              className="group relative overflow-hidden rounded-2xl p-8 border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl transition-colors duration-500 hover:bg-white/10"
             >
-              <div className="mb-6">
+              <div className="mb-6 relative z-10">
                 <svg
-                  className="w-12 h-12 text-[#ff3333]"
+                  className="w-12 h-12 text-[#D32F2F] transition-all duration-500 group-hover:drop-shadow-[0_0_15px_rgba(211,47,47,0.6)] group-hover:scale-110"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -65,13 +71,13 @@ export default function Services() {
                   <path strokeLinecap="round" strokeLinejoin="round" d={service.icon} />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-3 uppercase tracking-wider">
+              <h3 className="relative z-10 text-xl font-bold mb-3 uppercase tracking-wider">
                 {service.title}
               </h3>
-              <p className="text-zinc-400 leading-relaxed">
+              <p className="relative z-10 text-zinc-400 leading-relaxed">
                 {service.description}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

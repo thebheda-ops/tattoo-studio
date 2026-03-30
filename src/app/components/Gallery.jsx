@@ -1,4 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
+
+
 
 const galleryItems = [
   {
@@ -44,9 +47,22 @@ const galleryItems = [
 ];
 
 export default function Gallery() {
+  const getGridItemClasses = (index) => {
+    switch(index) {
+      case 0: return "col-span-2 md:col-span-2 md:row-span-2";
+      case 1: return "col-span-1 md:col-span-1 md:row-span-1";
+      case 2: return "col-span-1 md:col-span-1 md:row-span-1";
+      case 3: return "col-span-2 md:col-span-2 md:row-span-1";
+      case 4: return "col-span-1 md:col-span-1 md:row-span-2";
+      case 5: return "col-span-1 md:col-span-2 md:row-span-1";
+      case 6: return "col-span-2 md:col-span-1 md:row-span-2";
+      case 7: return "col-span-2 md:col-span-2 md:row-span-1";
+      default: return "col-span-1 md:col-span-1 md:row-span-1";
+    }
+  };
   return (
-    <section id='gallery' className='py-24 bg-zinc-950'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+    <section id='gallery' className='py-24 bg-black'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 perspective-[1000px]'>
         <div className='text-center mb-16'>
           <h2 className='text-4xl md:text-5xl font-bold mb-4'>
             OUR <span className='text-[#ff3333]'>PORTFOLIO</span>
@@ -57,20 +73,20 @@ export default function Gallery() {
           </p>
         </div>
 
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-          {galleryItems.map((item, index) => (
+        <div className='grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[300px] gap-4'>
+            {galleryItems.map((item, index) => (
             <div
               key={index}
-              className='group relative overflow-hidden aspect-4/5 cursor-pointer'
+              className={`group relative overflow-hidden rounded-xl border border-white/5 border-white/20 w-full h-full ${getGridItemClasses(index)}`}
             >
               <img
                 src={item.image}
                 alt={item.category}
-                className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110'
+                className='w-full h-full object-cover'
               />
               <div className='absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-                <div className='absolute bottom-0 left-0 right-0 p-4'>
-                  <span className='text-[#ff3333] text-xs uppercase tracking-widest'>
+                <div className='absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300'>
+                  <span className='text-[#ff3333] text-xs uppercase tracking-widest font-bold drop-shadow-md'>
                     {item.category}
                   </span>
                 </div>
