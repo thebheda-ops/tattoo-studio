@@ -53,12 +53,12 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.6 }}
-          className="flex flex-nowrap justify-center gap-2 mb-6 px-2 overflow-x-auto"
+          className="flex flex-wrap justify-center gap-2 mb-6 px-2"
         >
           {certifications.map((cert, index) => (
             <div 
               key={cert.label}
-              className="flex items-center gap-1.5 px-2 py-1.5 bg-primary/10 border border-primary/20 rounded-full whitespace-nowrap flex-shrink-0"
+              className="flex items-center gap-1.5 px-2 py-1.5 bg-primary/10 border border-primary/20 rounded-full whitespace-normal sm:whitespace-nowrap text-center leading-tight"
             >
               <cert.icon size={12} className="text-primary" />
               <span className="text-[10px] uppercase tracking-wider text-primary font-body">{cert.label}</span>
